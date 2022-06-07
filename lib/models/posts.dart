@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-class PostRequest {
-  PostRequest({
+class PostListPage {
+  PostListPage({
     required this.page,
     required this.pages,
     required this.posts,
@@ -13,15 +13,18 @@ class PostRequest {
   final List<PostModel> posts;
   final int total;
 
-  factory PostRequest.fromRawJson(String str) =>
-      PostRequest.fromJson(json.decode(str));
+  factory PostListPage.fromRawJson(String str) =>
+      PostListPage.fromJson(json.decode(str));
 
-  factory PostRequest.fromJson(Map<String, dynamic> json) => PostRequest(
+  factory PostListPage.fromJson(Map<String, dynamic> json) => PostListPage(
         page: json["page"],
         pages: json["pages"],
-        posts: List<PostModel>.from(json["posts"].map((x) => PostModel.fromJson(x))),
+        posts: List<PostModel>.from(
+            json["posts"].map((x) => PostModel.fromJson(x))),
         total: json["total"],
       );
+
+  bool isLastPage() => (page == pages);
 }
 
 class PostModel {
