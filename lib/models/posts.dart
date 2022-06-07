@@ -10,7 +10,7 @@ class PostRequest {
 
   final int page;
   final int pages;
-  final List<Post> posts;
+  final List<PostModel> posts;
   final int total;
 
   factory PostRequest.fromRawJson(String str) =>
@@ -19,13 +19,13 @@ class PostRequest {
   factory PostRequest.fromJson(Map<String, dynamic> json) => PostRequest(
         page: json["page"],
         pages: json["pages"],
-        posts: List<Post>.from(json["posts"].map((x) => Post.fromJson(x))),
+        posts: List<PostModel>.from(json["posts"].map((x) => PostModel.fromJson(x))),
         total: json["total"],
       );
 }
 
-class Post {
-  Post({
+class PostModel {
+  PostModel({
     required this.authorId,
     required this.created,
     required this.id,
@@ -37,7 +37,7 @@ class Post {
   final int id;
   final String text;
 
-  factory Post.fromJson(Map<String, dynamic> json) => Post(
+  factory PostModel.fromJson(Map<String, dynamic> json) => PostModel(
         authorId: json["author_id"],
         created: DateTime.parse(json["created"]),
         id: json["id"],
