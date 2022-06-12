@@ -90,21 +90,35 @@ class PostListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: Column(
-        children: [
-          ListTile(
-              leading: CircleAvatar(
-                child: Text("A${post.authorId}"),
+      child: Container(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                CircleAvatar(
+                  child: Text("A${post.authorId}"),
+                ),
+                Container(
+                  padding: const EdgeInsets.only(left: 12),
+                  child: Text(
+                    "Author ${post.authorId}",
+                    style: const TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                )
+              ],
+            ),
+            Container(
+              padding: const EdgeInsets.only(top: 10),
+              child: Text(
+                post.text,
+                style: const TextStyle(fontSize: 16),
               ),
-              title: Text(
-                "Author ${post.authorId}",
-                style:
-                    const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              )),
-          ListTile(
-            title: Text(post.text),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }
