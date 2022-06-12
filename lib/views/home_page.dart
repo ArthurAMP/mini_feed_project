@@ -74,7 +74,11 @@ class _PostPagedListViewState extends State<PostPagedListView> {
           if (index < _posts.length) {
             return PostListItem(post: _posts[index]);
           }
-          return const Center(child: CircularProgressIndicator());
+          return Center(
+              child: Container(
+            margin: const EdgeInsets.only(top: 8),
+            child: const CircularProgressIndicator(),
+          ));
         },
         separatorBuilder: (context, index) => const Divider(),
         itemCount: itemCount);
