@@ -93,7 +93,9 @@ class PostListItem extends StatelessWidget {
       child: Column(
         children: [
           ListTile(
-              leading: const CircleAvatar(),
+              leading: CircleAvatar(
+                child: Text("A${post.authorId}"),
+              ),
               title: Text(
                 "Author ${post.authorId}",
                 style:
