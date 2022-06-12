@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:mini_feed_project/models/posts.dart';
 import 'package:mini_feed_project/remote/minifeed_api.dart';
 
@@ -21,75 +22,46 @@ class PostPagedListView extends StatefulWidget {
 }
 
 class _PostPagedListViewState extends State<PostPagedListView> {
-  final _controller = ScrollController();
-  final _posts = <PostModel>[];
-  var _hasNextPage = true;
-  var _currentPage = 1;
-  var _isLoading = false;
+  final PagingController<int, PostModel> _pagingController =
+      PagingController(firstPageKey: 1);
 
   @override
   void initState() {
-    _controller.addListener(_scrollListener);
-    _fetchPosts();
+    _pagingController.addPageRequestListener((pageKey) {
+      _fetchPage(pageKey);
+    });
     super.initState();
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _pagingController.dispose();
     super.dispose();
   }
 
-  void _scrollListener() {
-    if (_controller.offset >= _controller.position.maxScrollExtent &&
-        !_isLoading &&
-        _hasNextPage) {
-      _fetchPosts();
-    }
-  }
-
-  void _fetchPosts() async {
-    setState(() => _isLoading = true);
-    var page = await MiniFeedAPI.getPostListPage(_currentPage);
-    if (page != null) {
-      if (page.posts.isNotEmpty) {
-        setState(() => _posts.addAll(page.posts));
+  void _fetchPage(int pageKey) async {
+    try {
+      final page = await MiniFeedAPI.getPostListPage(pageKey);
+      if (page == null) {
+        throw Exception("An error occurred!");
       }
       if (page.isLastPage()) {
-        _hasNextPage = false;
+        _pagingController.appendLastPage(page.posts);
       } else {
-        _currentPage++;
+        _pagingController.appendPage(page.posts, pageKey + 1);
       }
+    } catch (error) {
+      _pagingController.error = error;
     }
-    setState(() => _isLoading = false);
-  }
-
-  Widget _buildListView() {
-    var itemCount = _posts.length;
-    if (_hasNextPage) itemCount++;
-    return ListView.separated(
-        controller: _controller,
-        padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-        itemBuilder: (context, index) {
-          if (index < _posts.length) {
-            return PostListItem(post: _posts[index]);
-          }
-          return Center(
-              child: Container(
-            margin: const EdgeInsets.only(top: 8),
-            child: const CircularProgressIndicator(),
-          ));
-        },
-        separatorBuilder: (context, index) => const Divider(),
-        itemCount: itemCount);
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_posts.isNotEmpty) return _buildListView();
-    return const Center(
-      child: CircularProgressIndicator(),
-    );
+    return PagedListView(
+        pagingController: _pagingController,
+        builderDelegate: PagedChildBuilderDelegate(
+            itemBuilder: (context, post, index) =>
+                PostListItem(post: post as PostModel)));
   }
 }
 
@@ -99,37 +71,39 @@ class PostListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Container(
-        padding: const EdgeInsets.all(12),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
+    return Container(
+        padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+        child: Card(
+          child: Container(
+            padding: const EdgeInsets.all(12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CircleAvatar(
-                  child: Text("A${post.authorId}"),
+                Row(
+                  children: [
+                    CircleAvatar(
+                      child: Text("A${post.authorId}"),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.only(left: 12),
+                      child: Text(
+                        "Author ${post.authorId}",
+                        style: const TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                    )
+                  ],
                 ),
                 Container(
-                  padding: const EdgeInsets.only(left: 12),
+                  padding: const EdgeInsets.only(top: 10),
                   child: Text(
-                    "Author ${post.authorId}",
-                    style: const TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.bold),
+                    post.text,
+                    style: const TextStyle(fontSize: 16),
                   ),
                 )
               ],
             ),
-            Container(
-              padding: const EdgeInsets.only(top: 10),
-              child: Text(
-                post.text,
-                style: const TextStyle(fontSize: 16),
-              ),
-            )
-          ],
-        ),
-      ),
-    );
+          ),
+        ));
   }
 }
