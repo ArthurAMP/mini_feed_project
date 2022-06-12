@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:mini_feed_project/components/post_list_item.dart';
 import 'package:mini_feed_project/models/posts.dart';
 import 'package:mini_feed_project/remote/minifeed_api.dart';
 
@@ -62,48 +63,5 @@ class _PostPagedListViewState extends State<PostPagedListView> {
         builderDelegate: PagedChildBuilderDelegate(
             itemBuilder: (context, post, index) =>
                 PostListItem(post: post as PostModel)));
-  }
-}
-
-class PostListItem extends StatelessWidget {
-  const PostListItem({Key? key, required this.post}) : super(key: key);
-  final PostModel post;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-        child: Card(
-          child: Container(
-            padding: const EdgeInsets.all(12),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    CircleAvatar(
-                      child: Text("A${post.authorId}"),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.only(left: 12),
-                      child: Text(
-                        "Author ${post.authorId}",
-                        style: const TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                    )
-                  ],
-                ),
-                Container(
-                  padding: const EdgeInsets.only(top: 10),
-                  child: Text(
-                    post.text,
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                )
-              ],
-            ),
-          ),
-        ));
   }
 }
