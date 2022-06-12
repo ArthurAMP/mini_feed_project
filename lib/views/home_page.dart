@@ -30,8 +30,8 @@ class _PostPagedListViewState extends State<PostPagedListView> {
   @override
   void initState() {
     _controller.addListener(_scrollListener);
-    super.initState();
     _fetchPosts();
+    super.initState();
   }
 
   @override
