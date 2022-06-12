@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mini_feed_project/views/home_page.dart';
+import 'package:mini_feed_project/views/new_post_page.dart';
+import 'package:mini_feed_project/views/profile_page.dart';
 
 void main() {
   runApp(const App());
@@ -10,11 +12,55 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "MiniFeed",
-      home: Scaffold(
-        appBar: AppBar(title: const Center(child: Text("MiniFeed"))),
-        body: const HomePage(),
+    return const MaterialApp(title: "MiniFeed", home: MainScreen());
+  }
+}
+
+class MainScreen extends StatefulWidget {
+  const MainScreen({Key? key}) : super(key: key);
+
+  @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
+  var _selectedIndex = 0;
+  final _widgetOptions = const [HomePage(), NewPostPage(), ProfilePage()];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('MiniFeed'),
+      ),
+      body: IndexedStack(
+        children: _widgetOptions,
+        index: _selectedIndex,
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add),
+            label: 'New Post',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle_rounded),
+            label: 'Profile',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Theme.of(context).colorScheme.primary,
+        onTap: _onItemTapped,
       ),
     );
   }
