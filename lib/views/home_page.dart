@@ -34,6 +34,12 @@ class _PostPagedListViewState extends State<PostPagedListView> {
     _fetchPosts();
   }
 
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   void _scrollListener() {
     if (_controller.offset >= _controller.position.maxScrollExtent &&
         !_isLoading &&
