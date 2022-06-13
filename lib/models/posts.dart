@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:mini_feed_project/models/author.dart';
 
 class PostListPage {
   PostListPage({
@@ -29,19 +30,19 @@ class PostListPage {
 
 class PostModel {
   PostModel({
-    required this.authorId,
+    required this.author,
     required this.created,
     required this.id,
     required this.text,
   });
 
-  final int authorId;
+  final AuthorModel author;
   final DateTime created;
   final int id;
   final String text;
 
   factory PostModel.fromJson(Map<String, dynamic> json) => PostModel(
-        authorId: json["author_id"],
+        author: AuthorModel.fromJson(json["author"]),
         created: DateTime.parse(json["created"]),
         id: json["id"],
         text: json["text"],

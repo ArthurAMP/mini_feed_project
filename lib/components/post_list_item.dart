@@ -18,12 +18,12 @@ class PostListItem extends StatelessWidget {
                 Row(
                   children: [
                     CircleAvatar(
-                      child: Text("A${post.authorId}"),
+                      child: Text("A${post.author.id}"),
                     ),
                     Container(
                       padding: const EdgeInsets.only(left: 12),
                       child: Text(
-                        "Author ${post.authorId}",
+                        "Author ${post.author.id}",
                         style: const TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold),
                       ),
