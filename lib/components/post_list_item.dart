@@ -9,36 +9,34 @@ class PostListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-        child: Card(
-          child: Container(
-            padding: const EdgeInsets.all(12),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    CircleAvatar(
-                      child: Text("A${post.author.id}"),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.only(left: 12),
-                      child: Text(
-                        "Author ${post.author.id}",
-                        style: const TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                    )
-                  ],
-                ),
-                Container(
-                  padding: const EdgeInsets.only(top: 10),
-                  child: Text(
-                    post.text,
-                    style: const TextStyle(fontSize: 16),
+        child: Container(
+          padding: const EdgeInsets.all(12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  CircleAvatar(
+                    child: Text("A${post.author.id}"),
                   ),
-                )
-              ],
-            ),
+                  Container(
+                    padding: const EdgeInsets.only(left: 12),
+                    child: Text(
+                      "Author ${post.author.id}",
+                      style: const TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                  )
+                ],
+              ),
+              Container(
+                padding: const EdgeInsets.only(top: 10, bottom: 10),
+                child: Text(
+                  post.text,
+                  style: const TextStyle(fontSize: 16),
+                ),
+              ),
+            ],
           ),
         ));
   }
