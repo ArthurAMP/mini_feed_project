@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
 import 'package:mini_feed_project/models/posts.dart';
 import 'package:mini_feed_project/models/token.dart';
@@ -33,7 +32,7 @@ class MiniFeedAPI {
     final response = await http.post(uri,
         headers: requestHeaders, body: jsonEncode(requestBody));
     if (response.statusCode == 200) {
-      return Token.fromJson(jsonDecode(response.body));
+      return Token.fromRawJson(response.body);
     }
     return null;
   }
