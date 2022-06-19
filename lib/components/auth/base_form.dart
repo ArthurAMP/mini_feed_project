@@ -47,11 +47,14 @@ class _AuthFormState extends State<AuthForm> {
                         alignment: WrapAlignment.center,
                         children: [
                           ...widget.formFields,
-                          ElevatedButton(
-                            onPressed: () {},
-                            child: Text(widget.title),
-                            style: ElevatedButton.styleFrom(
-                                minimumSize: const Size(200, 45)),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 8),
+                            child: ElevatedButton(
+                              onPressed: () {},
+                              child: Text(widget.title),
+                              style: ElevatedButton.styleFrom(
+                                  minimumSize: const Size(200, 45)),
+                            ),
                           ),
                         ]),
                   ),
