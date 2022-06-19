@@ -62,7 +62,7 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
 
   @override
   Widget build(BuildContext context) {
-    final _buttonIcon =
+    final buttonIcon =
         _isPasswordVisible ? Icons.visibility_off : Icons.visibility;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -73,7 +73,7 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
             obscureText: !_isPasswordVisible,
           ),
         ),
-        IconButton(onPressed: _toggleVisibility, icon: Icon(_buttonIcon))
+        IconButton(onPressed: _toggleVisibility, icon: Icon(buttonIcon))
       ],
     );
   }
