@@ -25,7 +25,6 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   var _selectedIndex = 0;
-  final _widgetOptions = const [HomePage(), NewPostPage(), ProfilePage()];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -40,7 +39,7 @@ class _MainScreenState extends State<MainScreen> {
         title: const Text('MiniFeed'),
       ),
       body: IndexedStack(
-        children: _widgetOptions,
+        children: const [HomePage(), NewPostPage(), ProfilePage()],
         index: _selectedIndex,
       ),
       bottomNavigationBar: BottomNavigationBar(
