@@ -13,10 +13,14 @@ class SignUpForm extends StatelessWidget {
     return AuthForm(
         title: "Sign Up",
         bottomText: "Already have an account? Log In!",
-        formFields: const [
-          AuthTextFormField(fieldName: "Username"),
-          AuthTextFormField(fieldName: "Password"),
-          AuthTextFormField(fieldName: "Birthday"),
+        formFields: [
+          WrappedTitle(
+              title: "Username",
+              child: TextFormField(
+                decoration: authFieldsDecoration,
+              )),
+          const WrappedTitle(title: "Password", child: PasswordFormField()),
+          const WrappedTitle(title: "Birthday", child: DateFormField())
         ],
         onBottomTextButtonPressed: onBottomTextButtonPressed);
   }
