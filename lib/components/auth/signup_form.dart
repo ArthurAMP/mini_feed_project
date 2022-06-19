@@ -8,20 +8,16 @@ class SignUpForm extends StatelessWidget {
 
   final void Function() onBottomTextButtonPressed;
 
-  final _title = "Sign Up";
-  final _bottomText = "Already have an account? Sign in!";
-  final _formFields = const [
-    AuthTextFormField(fieldName: "Email"),
-    AuthTextFormField(fieldName: "Password"),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return AuthForm(
-      title: _title,
-      bottomText: _bottomText,
-      formFields: _formFields,
-      onBottomTextButtonPressed: onBottomTextButtonPressed,
-    );
+        title: "Sign Up",
+        bottomText: "Already have an account? Log In!",
+        formFields: const [
+          AuthTextFormField(fieldName: "Username"),
+          AuthTextFormField(fieldName: "Password"),
+          AuthTextFormField(fieldName: "Birthday"),
+        ],
+        onBottomTextButtonPressed: onBottomTextButtonPressed);
   }
 }

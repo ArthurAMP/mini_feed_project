@@ -11,29 +11,22 @@ class AuthPage extends StatefulWidget {
 
 class _AuthPageState extends State<AuthPage> {
   var _selectedIndex = 0;
-  var _widgetOptions = <Widget>[];
 
-  @override
-  void initState() {
-    _widgetOptions = [
-      LoginForm(
-        onBottomTextButtonPressed: _onBottomTextButtonTapped,
-      ),
-      SignUpForm(
-        onBottomTextButtonPressed: _onBottomTextButtonTapped,
-      )
-    ];
-    super.initState();
-  }
-
-  void _onBottomTextButtonTapped() => setState(
-      () => _selectedIndex = (_selectedIndex + 1) % _widgetOptions.length);
+  void _onBottomTextButtonTapped() =>
+      setState(() => _selectedIndex = (_selectedIndex + 1) % 2);
 
   @override
   Widget build(BuildContext context) {
     return IndexedStack(
       index: _selectedIndex,
-      children: _widgetOptions,
+      children: [
+        LoginForm(
+          onBottomTextButtonPressed: _onBottomTextButtonTapped,
+        ),
+        SignUpForm(
+          onBottomTextButtonPressed: _onBottomTextButtonTapped,
+        ),
+      ],
     );
   }
 }
