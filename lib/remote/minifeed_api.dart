@@ -2,9 +2,11 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:mini_feed_project/models/posts.dart';
 import 'package:mini_feed_project/models/token.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class MiniFeedAPI {
   static const _apiAuthority = "guide-flask.herokuapp.com";
+  static const storage = FlutterSecureStorage();
 
   static Future<PostListPage?> getPostListPage(int page) async {
     final queryParameters = {
@@ -32,8 +34,14 @@ class MiniFeedAPI {
     final response = await http.post(uri,
         headers: requestHeaders, body: jsonEncode(requestBody));
     if (response.statusCode == 200) {
-      return Token.fromRawJson(response.body);
+      Token token = Token.fromRawJson(response.body);
+      await storage.write(key: 'jwt', value: token.accessToken);
+      return token;
     }
     return null;
+  }
+
+  static Future<String?> getToken() async {
+    return await storage.read(key: 'jwt');
   }
 }
