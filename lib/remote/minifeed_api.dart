@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:mini_feed_project/models/posts.dart';
+import 'package:mini_feed_project/models/user.dart';
 import 'package:mini_feed_project/models/token.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -43,5 +44,24 @@ class MiniFeedAPI {
 
   static Future<String?> getToken() async {
     return await storage.read(key: 'jwt');
+  }
+
+  static Future<User?> getUser() async {
+    final uri = Uri.https(_apiAuthority, "/users/me");
+
+    final String token = await storage.read(key: 'jwt') ?? "";
+
+    final String authorization = "Bearer " + token;
+
+    final requestHeaders = {
+      "Authorization": authorization,
+    };
+
+    final response = await http.get(uri, headers: requestHeaders);
+    if (response.statusCode == 200) {
+      User user = User.fromRawJson(response.body);
+      return user;
+    }
+    return null;
   }
 }
