@@ -58,18 +58,19 @@ class _PostPagedListViewState extends State<PostPagedListView> {
 
   @override
   Widget build(BuildContext context) {
-    return PagedListView.separated(
+    // return PagedListView.separated(
+    return PagedListView(
       pagingController: _pagingController,
       builderDelegate: PagedChildBuilderDelegate(
           itemBuilder: (context, post, index) =>
               PostListItem(post: post as PostModel)),
-      separatorBuilder: (context, index) => const Divider(
-        height: 20,
-        thickness: 0.5,
-        indent: 20,
-        endIndent: 20,
-        color: Colors.grey,
-      ),
+      // separatorBuilder: (context, index) => const Divider(
+      //   height: 20,
+      //   thickness: 0.5,
+      //   indent: 20,
+      //   endIndent: 20,
+      //   color: Colors.grey,
+      // ),
     );
   }
 }

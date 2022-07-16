@@ -36,13 +36,25 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('MiniFeed'),
-      ),
-      body: IndexedStack(
-        children: _widgetOptions,
-        index: _selectedIndex,
-      ),
+      backgroundColor: Colors.transparent,
+      // REMOVED APP BAR
+      // appBar: AppBar(
+      //   title: const Text('MiniFeed'),
+      // ),
+      body: Container(
+          decoration: new BoxDecoration(
+              gradient: new LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Color.fromARGB(255, 10, 10, 10),
+              Color.fromARGB(255, 12, 39, 63)
+            ],
+          )),
+          child: IndexedStack(
+            children: _widgetOptions,
+            index: _selectedIndex,
+          )),
       bottomNavigationBar: BottomNavigationBar(
         items: const [
           BottomNavigationBarItem(
