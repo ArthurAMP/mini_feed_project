@@ -10,9 +10,7 @@ class MiniFeedAPI {
   static const storage = FlutterSecureStorage();
 
   static Future<PostListPage?> getPostListPage(int page) async {
-    final queryParameters = {
-      "page": page.toString(),
-    };
+    final queryParameters = {"page": page.toString(), "reversed": "true"};
     final uri = Uri.https(_apiAuthority, "/posts", queryParameters);
     final response = await http.get(uri);
 
