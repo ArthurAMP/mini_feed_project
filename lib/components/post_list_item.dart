@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mini_feed_project/models/posts.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 
 class PostListItem extends StatelessWidget {
   const PostListItem({Key? key, required this.post}) : super(key: key);
@@ -32,9 +33,11 @@ class PostListItem extends StatelessWidget {
               ),
               Container(
                 padding: const EdgeInsets.only(top: 10, bottom: 10),
-                child: Text(
-                  post.text,
-                  style: const TextStyle(fontSize: 16),
+                child: MarkdownBody(
+                  data: post.text,
+                  styleSheet: MarkdownStyleSheet.fromTheme(ThemeData(
+                      textTheme:
+                          TextTheme(bodyText2: TextStyle(fontSize: 16.0)))),
                 ),
               ),
             ],
