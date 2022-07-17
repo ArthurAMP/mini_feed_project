@@ -9,9 +9,24 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: PostPagedListView(),
-    );
+    return SafeArea(
+        child: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
+            child: Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(left: 15, right: 15, top: 25),
+                  child: Row(children: [
+                    Text("MiniFeed",
+                        style: TextStyle(
+                            fontSize: 32,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold)),
+                  ]),
+                ),
+                PostPagedListView(),
+              ],
+            )));
   }
 }
 
@@ -60,6 +75,8 @@ class _PostPagedListViewState extends State<PostPagedListView> {
   Widget build(BuildContext context) {
     // return PagedListView.separated(
     return PagedListView(
+      primary: false,
+      shrinkWrap: true,
       pagingController: _pagingController,
       builderDelegate: PagedChildBuilderDelegate(
           itemBuilder: (context, post, index) =>
