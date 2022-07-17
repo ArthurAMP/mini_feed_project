@@ -9,24 +9,33 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var postPagedListView = PostPagedListView();
+
+    Future refresh() async {
+      postPagedListView = PostPagedListView();
+    }
+
     return SafeArea(
-        child: SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
-            child: Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(left: 15, right: 15, top: 25),
-                  child: Row(children: [
-                    Text("MiniFeed",
-                        style: TextStyle(
-                            fontSize: 32,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold)),
-                  ]),
-                ),
-                PostPagedListView(),
-              ],
-            )));
+      child: RefreshIndicator(
+          onRefresh: refresh,
+          child: SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: 15, right: 15, top: 25),
+                    child: Row(children: [
+                      Text("MiniFeed",
+                          style: TextStyle(
+                              fontSize: 32,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold)),
+                    ]),
+                  ),
+                  postPagedListView,
+                ],
+              ))),
+    );
   }
 }
 
