@@ -38,6 +38,7 @@ dependencies:
   infinite_scroll_pagination: ^3.2.0
   flutter_secure_storage: ^5.0.2
   flutter_markdown: ^0.6.10+2
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:
