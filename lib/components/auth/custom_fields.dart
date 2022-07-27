@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-const authFieldsDecoration = InputDecoration(border: OutlineInputBorder());
+const authFieldsDecoration = InputDecoration(
+    border: OutlineInputBorder(), fillColor: Colors.white, filled: true);
 
 class DateFormField extends StatefulWidget {
   const DateFormField({Key? key}) : super(key: key);
@@ -73,15 +74,18 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
             obscureText: !_isPasswordVisible,
           ),
         ),
-        IconButton(onPressed: _toggleVisibility, icon: Icon(buttonIcon))
+        IconButton(
+            onPressed: _toggleVisibility,
+            icon: Icon(
+              buttonIcon,
+              color: Theme.of(context).colorScheme.onBackground,
+            ))
       ],
     );
   }
 }
 
 class WrappedTitle extends StatelessWidget {
-  static const _titleStyle = TextStyle(fontSize: 16);
-
   const WrappedTitle(
       {Key? key, required this.title, required this.child, this.spacing = 8.0})
       : super(key: key);
@@ -97,7 +101,8 @@ class WrappedTitle extends StatelessWidget {
       children: [
         Text(
           title,
-          style: _titleStyle,
+          style: TextStyle(
+              fontSize: 16, color: Theme.of(context).colorScheme.onBackground),
         ),
         child,
       ],
