@@ -15,15 +15,20 @@ class PostListItem extends StatelessWidget {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           child: Padding(
-              padding: EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     children: [
                       CircleAvatar(
+                        backgroundColor:
+                            Theme.of(context).colorScheme.secondary,
+                        foregroundColor:
+                            Theme.of(context).colorScheme.onSecondary,
                         child: Text(
-                            post.author.username.substring(0, 2).toUpperCase()),
+                          post.author.username.substring(0, 2).toUpperCase(),
+                        ),
                       ),
                       Container(
                         padding: const EdgeInsets.only(left: 12),
@@ -40,8 +45,8 @@ class PostListItem extends StatelessWidget {
                     child: MarkdownBody(
                       data: post.text,
                       styleSheet: MarkdownStyleSheet.fromTheme(ThemeData(
-                          textTheme:
-                              TextTheme(bodyText2: TextStyle(fontSize: 16.0)))),
+                          textTheme: const TextTheme(
+                              bodyText2: TextStyle(fontSize: 16.0)))),
                     ),
                   ),
                 ],

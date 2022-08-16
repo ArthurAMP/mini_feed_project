@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mini_feed_project/components/colors.dart';
 import 'package:mini_feed_project/views/home_page.dart';
 import 'package:mini_feed_project/views/new_post_page.dart';
 import 'package:mini_feed_project/views/profile_page.dart';
@@ -12,7 +13,10 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(title: "MiniFeed", home: MainScreen());
+    return MaterialApp(
+        title: "MiniFeed",
+        home: const MainScreen(),
+        theme: ThemeData(colorScheme: nepsColorTheme));
   }
 }
 
@@ -42,14 +46,11 @@ class _MainScreenState extends State<MainScreen> {
       //   title: const Text('MiniFeed'),
       // ),
       body: Container(
-          decoration: new BoxDecoration(
-              gradient: new LinearGradient(
+          decoration: const BoxDecoration(
+              gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [
-              Color.fromARGB(255, 10, 10, 10),
-              Color.fromARGB(255, 12, 39, 63)
-            ],
+            colors: [NepsColors.black, NepsColors.blue],
           )),
           child: IndexedStack(
             children: _widgetOptions,
@@ -72,6 +73,8 @@ class _MainScreenState extends State<MainScreen> {
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: Theme.of(context).colorScheme.primary,
+        unselectedItemColor: Theme.of(context).colorScheme.secondary,
+        backgroundColor: Colors.white,
         onTap: _onItemTapped,
       ),
     );
