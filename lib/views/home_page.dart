@@ -4,15 +4,17 @@ import 'package:mini_feed_project/components/post_list_item.dart';
 import 'package:mini_feed_project/models/posts.dart';
 import 'package:mini_feed_project/remote/minifeed_api.dart';
 
+GlobalKey<PostPagedListViewState> _key = GlobalKey();
+
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var postPagedListView = const PostPagedListView();
+    var postPagedListView = PostPagedListView(key: _key);
 
     Future refresh() async {
-      postPagedListView = const PostPagedListView();
+      _key.currentState?.pagingController.refresh();
     }
 
     return SafeArea(
@@ -44,16 +46,16 @@ class PostPagedListView extends StatefulWidget {
   const PostPagedListView({Key? key}) : super(key: key);
 
   @override
-  State<PostPagedListView> createState() => _PostPagedListViewState();
+  State<PostPagedListView> createState() => PostPagedListViewState();
 }
 
-class _PostPagedListViewState extends State<PostPagedListView> {
-  final PagingController<int, PostModel> _pagingController =
+class PostPagedListViewState extends State<PostPagedListView> {
+  PagingController<int, PostModel> pagingController =
       PagingController(firstPageKey: 1);
 
   @override
   void initState() {
-    _pagingController.addPageRequestListener((pageKey) {
+    pagingController.addPageRequestListener((pageKey) {
       _fetchPage(pageKey);
     });
     super.initState();
@@ -61,7 +63,7 @@ class _PostPagedListViewState extends State<PostPagedListView> {
 
   @override
   void dispose() {
-    _pagingController.dispose();
+    pagingController.dispose();
     super.dispose();
   }
 
@@ -71,13 +73,14 @@ class _PostPagedListViewState extends State<PostPagedListView> {
       if (page == null) {
         throw Exception("An error occurred!");
       }
+
       if (page.isLastPage()) {
-        _pagingController.appendLastPage(page.posts);
+        pagingController.appendLastPage(page.posts);
       } else {
-        _pagingController.appendPage(page.posts, pageKey + 1);
+        pagingController.appendPage(page.posts, pageKey + 1);
       }
     } catch (error) {
-      _pagingController.error = error;
+      pagingController.error = error;
     }
   }
 
@@ -87,7 +90,7 @@ class _PostPagedListViewState extends State<PostPagedListView> {
     return PagedListView(
       primary: false,
       shrinkWrap: true,
-      pagingController: _pagingController,
+      pagingController: pagingController,
       builderDelegate: PagedChildBuilderDelegate(
           itemBuilder: (context, post, index) =>
               PostListItem(post: post as PostModel)),
