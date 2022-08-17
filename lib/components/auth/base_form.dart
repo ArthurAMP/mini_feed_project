@@ -36,9 +36,9 @@ class _AuthFormState extends State<AuthForm> {
                   Text(
                     widget.title,
                     style: TextStyle(
-                      fontSize: 36,
-                      color: Theme.of(context).colorScheme.onBackground,
-                    ),
+                        fontSize: 36,
+                        color: Theme.of(context).colorScheme.onBackground,
+                        fontWeight: FontWeight.bold),
                   ),
                   Form(
                     key: _formKey,
