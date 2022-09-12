@@ -40,6 +40,27 @@ class MiniFeedAPI {
     return null;
   }
 
+  static Future<String?> signup(
+      String username, String password, String email, String birthdate) async {
+    final uri = Uri.https(_apiAuthority, "/users");
+
+    final requestHeaders = {
+      "Content-Type": "application/json; charset=UTF-8",
+    };
+    final requestBody = {
+      "birthdate": birthdate,
+      "email": email,
+      "username": username,
+      "password": password,
+    };
+    final response = await http.post(uri,
+        headers: requestHeaders, body: jsonEncode(requestBody));
+    if (response.statusCode == 201) {
+      return ("Account Created");
+    }
+    return null;
+  }
+
   static Future<String?> getToken() async {
     return await storage.read(key: 'jwt');
   }
