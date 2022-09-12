@@ -5,7 +5,9 @@ const authFieldsDecoration = InputDecoration(
     border: OutlineInputBorder(), fillColor: Colors.white, filled: true);
 
 class DateFormField extends StatefulWidget {
-  const DateFormField({Key? key}) : super(key: key);
+  const DateFormField({Key? key, required this.onValidation}) : super(key: key);
+
+  final void Function(DateTime birthDate) onValidation;
 
   @override
   State<DateFormField> createState() => _DateFormFieldState();
@@ -44,12 +46,48 @@ class _DateFormFieldState extends State<DateFormField> {
       controller: _controller,
       onTap: () => _getDateFromUser(context),
       readOnly: true,
+      validator: (value) {
+        if (_selectedDate == null || value == null || value.isEmpty) {
+          return "Please, insert a birth date";
+        }
+        widget.onValidation(_selectedDate!);
+        return null;
+      },
+    );
+  }
+}
+
+class UsernameFormField extends StatefulWidget {
+  const UsernameFormField({Key? key, required this.onValidation})
+      : super(key: key);
+
+  final void Function(String username) onValidation;
+
+  @override
+  State<UsernameFormField> createState() => _UsernameFormFieldState();
+}
+
+class _UsernameFormFieldState extends State<UsernameFormField> {
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      decoration: authFieldsDecoration,
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return "Please, insert a username.";
+        }
+        widget.onValidation(value);
+        return null;
+      },
     );
   }
 }
 
 class PasswordFormField extends StatefulWidget {
-  const PasswordFormField({Key? key}) : super(key: key);
+  const PasswordFormField({Key? key, required this.onValidation})
+      : super(key: key);
+
+  final void Function(String password) onValidation;
 
   @override
   State<PasswordFormField> createState() => _PasswordFormFieldState();
@@ -72,6 +110,13 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
           child: TextFormField(
             decoration: authFieldsDecoration,
             obscureText: !_isPasswordVisible,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return "Please, insert a password.";
+              }
+              widget.onValidation(value);
+              return null;
+            },
           ),
         ),
         IconButton(

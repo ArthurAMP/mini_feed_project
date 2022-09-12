@@ -6,13 +6,15 @@ class AuthForm extends StatefulWidget {
       required this.title,
       required this.bottomText,
       required this.formFields,
-      required this.onBottomTextButtonPressed})
+      required this.onBottomTextButtonPressed,
+      required this.onSubmitButtonPressed})
       : super(key: key);
 
   final String title;
   final String bottomText;
   final List<Widget> formFields;
   final void Function() onBottomTextButtonPressed;
+  final void Function() onSubmitButtonPressed;
 
   @override
   State<AuthForm> createState() => _AuthFormState();
@@ -50,7 +52,11 @@ class _AuthFormState extends State<AuthForm> {
                           Padding(
                             padding: const EdgeInsets.only(top: 8),
                             child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                if (_formKey.currentState!.validate()) {
+                                  widget.onSubmitButtonPressed();
+                                }
+                              },
                               child: Text(widget.title),
                               style: ElevatedButton.styleFrom(
                                   minimumSize: const Size(200, 45)),
