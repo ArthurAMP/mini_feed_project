@@ -20,7 +20,7 @@ class MiniFeedAPI {
     return null;
   }
 
-  static Future<Token?> login(String username, String password) async {
+  static Future<bool?> login(String username, String password) async {
     final uri = Uri.https(_apiAuthority, "/auth/login");
 
     final requestHeaders = {
@@ -35,14 +35,14 @@ class MiniFeedAPI {
     if (response.statusCode == 200) {
       Token token = Token.fromRawJson(response.body);
       await storage.write(key: 'jwt', value: token.accessToken);
-      return token;
+      return true;
     }
     return null;
   }
 
-  static Future<String?> signup(
+  static Future<bool?> signup(
       String username, String password, String email, String birthdate) async {
-    final uri = Uri.https(_apiAuthority, "/users");
+    final uri = Uri.https(_apiAuthority, "/users/");
 
     final requestHeaders = {
       "Content-Type": "application/json; charset=UTF-8",
@@ -56,8 +56,9 @@ class MiniFeedAPI {
     final response = await http.post(uri,
         headers: requestHeaders, body: jsonEncode(requestBody));
     if (response.statusCode == 201) {
-      return ("Account Created");
+      return true;
     }
+
     return null;
   }
 
